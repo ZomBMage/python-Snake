@@ -58,8 +58,7 @@ def output_to_screen(screen):
             data = row[1][i: i+8]
             data = "".join(map(str, data))
             data = int(data, base=2)
-            data = hex(data)
             register = row[0] + 1
             temp_commands.append([register,data])
-        commands.append(temp_commands[::-1])
+        commands.append(temp_commands)
     return commands

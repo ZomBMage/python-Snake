@@ -20,9 +20,9 @@ while (display[food_y][food_x] != 0):
 display[food_y][food_x] = 1
 for i in snake_pieces:
     display[i[1][1]][i[1][0]] = 1
-for i in display:print(i)
 
 with curtsies.Input(keynames="curses") as inp:
+    dead = False
     snake_pieces.pop(-1)
     snake_pieces = [[i[0]+1, i[1]] for i in snake_pieces]
     if snake_direct == "left":
@@ -43,13 +43,13 @@ with curtsies.Input(keynames="curses") as inp:
             food_x = random.randint(1,30)
             food_y = random.randint(1,6)
     elif snake_head_x == 0:
-        break
+        dead = True
     elif snake_head_y == 0:
-        break
+        dead = True
     elif snake_head_x == 31:
-        break
+        dead = True
     elif snake_head_y == 7:
-        break
+        dead = True
     display = [[1 for i in range(32)]]
     display.extend([[int((i/31).is_integer()) for i in range(32)]for j in range(6)])
     display.append([1 for i in range(32)])
@@ -62,31 +62,32 @@ with curtsies.Input(keynames="curses") as inp:
         command_to_run = []
         for command in command_set:
             command_to_run.extend(command)
+        print(command_to_run)
         device._write(command_to_run)
 
-    key_pressed = repr(input_generator[-1])
     if key_pressed == "KEY_UP":
         snake_direct = "up"
-    if key_pressed == "KET_DOWN":
+    elif key_pressed == "KET_DOWN":
         snake_direct = "down"
-    if key_pressed == "KEY_LEFT":
+    elif key_pressed == "KEY_LEFT":
         snake_direct = "left"
-    if key_pressed == "KEY_RIGHT":
+    elif key_pressed == "KEY_RIGHT":
         snake_direct = "right"
-
-display = [[1]*32]*8
-commands = screen.output_to_screen(display)
-for command_set in commands:
-    command_to_run = []
-    for command in command_set:
-        command_to_run.extend(command)
-    device._write(command_to_run)
-time.sleep(0.5)
-display = [[0]*32]*8
-commands = screen.output_to_screen(display)
-for command_set in commands:
-    command_to_run = []
-    for command in command_set:
-        command_to_run.extend(command)
-    device._write(command_to_run)
-print("Score:",len(snake_pieces))
+    if dead:
+        display = [[1]*32]*8
+        commands = screen.output_to_screen(display)
+        for command_set in commands:
+            command_to_run = []
+            for command in command_set:
+                command_to_run.extend(command)
+            device._write(command_to_run)
+        time.sleep(0.5)
+        display = [[0]*32]*8
+        commands = screen.output_to_screen(display)
+        for command_set in commands:
+            command_to_run = []
+            for command in command_set:
+                command_to_run.extend(command)
+            device._write(command_to_run)
+        print("Score:",len(snake_pieces))
+        quit()
