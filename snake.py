@@ -23,10 +23,10 @@ for i in snake_pieces:
 dead = False
 while not dead:
     dead = False
-    if keyboard.is_pressed("down"): snake_direct = "up"
-    elif keyboard.is_pressed("up"): snake_direct = "down"
-    elif keyboard.is_pressed("left"): snake_direct = "right"
-    elif keyboard.is_pressed("right"): snake_direct = "left" # Inverted due to LED Matrix orientation
+    if keyboard.is_pressed("down") and snake_direct != "down": snake_direct = "up"
+    elif keyboard.is_pressed("up") and snake_direct != "up": snake_direct = "down"
+    elif keyboard.is_pressed("left") and snake_direct != "left": snake_direct = "right"
+    elif keyboard.is_pressed("right") and snake_direct != "right": snake_direct = "left" # Inverted due to LED Matrix orientation
     snake_pieces.pop(-1)
     snake_pieces = [[i[0]+1, i[1]] for i in snake_pieces]
     if snake_direct == "left":
