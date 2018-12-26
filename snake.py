@@ -54,6 +54,8 @@ while not dead:
         dead = True
     elif snake_head_y == 7:
         dead = True
+    elif [snake_head_x, snake_head_y] in [i[1] for i in snake_parts]:
+        dead = True
     display = [[1 for i in range(32)]]
     display.extend([[int((i/31).is_integer()) for i in range(32)]for j in range(6)])
     display.append([1 for i in range(32)])
