@@ -1,3 +1,9 @@
+# This file contains classes for each set of characters
+# Characters are stores as 8-long integer arrays
+# Each integer represents a 0-255 binary number
+# Each bit in the binary number corresponds to an on/off
+# signal for each row in the matrix
+
 class patterns(object):
     empty = [0, 0, 0, 0, 0, 0, 0, 0]
 
